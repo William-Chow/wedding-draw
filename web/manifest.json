@@ -1,12 +1,12 @@
 {
-    "name": "wedding_draw",
-    "short_name": "wedding_draw",
+    "name": "Wedding Draw",
+    "short_name": "Wedding Draw",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter Wedding project.",
-    "orientation": "portrait-primary",
+    "background_color": "#FFFAF6",
+    "theme_color": "#B4436C",
+    "description": "Lucky-number draw for weddings: spinning reels, a winners list, sound effects and confetti.",
+    "orientation": "any",
     "prefer_related_applications": false,
     "icons": [
         {

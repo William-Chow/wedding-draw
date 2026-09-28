@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [ master, 'claude/**' ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+# A newer push to the same branch cancels the run that is still going
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Analyze, test and build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # AGP 8.11 needs Java 17 or newer
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.44.6'
+          channel: stable
+          cache: true
+
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: flutter test
+      - run: flutter build web --release
+
+      # The runner image ships an Android SDK; accept its licences so Gradle may fetch what it needs
+      - name: Accept Android SDK licences
+        run: yes | flutter doctor --android-licenses > /dev/null || true
+      - run: flutter build apk --debug
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: web-build
+          path: build/web
+          retention-days: 7
+          if-no-files-found: ignore
