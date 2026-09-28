@@ -242,6 +242,43 @@ void main() {
     expect(prefs.getStringList(DrawStorage.winnersKey), isEmpty);
   });
 
+  testWidgets('copies the winners list as text', (tester) async {
+    final copied = <String>[];
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+      SystemChannels.platform,
+      (call) async {
+        if (call.method == 'Clipboard.setData') {
+          copied.add((call.arguments as Map)['text'] as String);
+        }
+        return null;
+      },
+    );
+    addTearDown(
+      () => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+        SystemChannels.platform,
+        null,
+      ),
+    );
+    await pumpDrawApp(
+      tester,
+      prefs: {
+        DrawStorage.winnersKey: ['5', '17', '250'],
+      },
+    );
+
+    await tester.tap(find.byTooltip('Copy winners'));
+    await tester.pump();
+
+    expect(copied, [
+      '${DrawSettings.defaultTitle} – lucky draw winners\n'
+          '#1  005\n'
+          '#2  017\n'
+          '#3  250  (outside the current range)',
+    ]);
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.text('Copied 3 winners to the clipboard.'), findsOneWidget);
+  });
+
   testWidgets('history actions are disabled while the reels spin', (
     tester,
   ) async {
@@ -264,6 +301,11 @@ void main() {
     expect(iconButton('Clear all winners').onPressed, isNull);
     expect(iconButton('Remove winner #1').onPressed, isNull);
     expect(iconButton('Draw settings').onPressed, isNull);
+    expect(
+      iconButton('Copy winners').onPressed,
+      isNotNull,
+      reason: 'copying changes nothing',
+    );
 
     await pumpThroughSpin(tester);
     expect(iconButton('Undo last draw').onPressed, isNotNull);

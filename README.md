@@ -24,8 +24,10 @@ rose-and-champagne theme, and keyboard shortcuts for presenter clickers.
   ticket 7 of 200 shows as `007`.
 - **Winners list.** Winners are numbered in draw order (#1, #2, …). You can
   remove a single winner (with Undo), take back the last draw, or clear the
-  whole list (after a confirmation). The list is a side panel in landscape
-  and sits below the reels in portrait.
+  whole list (after a confirmation). The copy button puts the whole list on
+  the clipboard as text, ready to paste into a chat for whoever hands out the
+  prizes. The list is a side panel in landscape and sits below the reels in
+  portrait.
 - **Saved automatically.** Settings, winners and the mute switch are stored
   on the device, so restarting the app halfway through the evening keeps the
   list and still avoids repeats.

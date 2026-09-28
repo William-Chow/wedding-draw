@@ -13,6 +13,7 @@ class HistoryPanel extends StatefulWidget {
     required this.onRemove,
     required this.onUndoLast,
     required this.onClearAll,
+    required this.onCopy,
   });
 
   final List<int> winners;
@@ -26,6 +27,10 @@ class HistoryPanel extends StatefulWidget {
   final ValueChanged<int> onRemove;
   final VoidCallback onUndoLast;
   final VoidCallback onClearAll;
+
+  /// Copies the list as text. Read-only, so it stays available while the
+  /// reels spin.
+  final VoidCallback onCopy;
 
   @override
   State<HistoryPanel> createState() => _HistoryPanelState();
@@ -82,6 +87,11 @@ class _HistoryPanelState extends State<HistoryPanel> {
                     style: theme.textTheme.titleMedium,
                     overflow: TextOverflow.ellipsis,
                   ),
+                ),
+                IconButton(
+                  tooltip: 'Copy winners',
+                  icon: const Icon(Icons.copy_all_outlined),
+                  onPressed: winners.isEmpty ? null : widget.onCopy,
                 ),
                 IconButton(
                   tooltip: 'Undo last draw',

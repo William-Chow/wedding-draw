@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 
 import '../audio/sound_effects.dart';
 import '../draw/draw_controller.dart';
+import '../draw/winners_text.dart';
 import '../settings/draw_settings.dart';
 import 'celebration.dart';
 import 'history_panel.dart';
@@ -208,6 +209,26 @@ class _DrawPageState extends State<DrawPage>
     _showSnackBar('All winners cleared. Every number can be drawn again.');
   }
 
+  Future<void> _copyWinners() async {
+    final winners = _controller.winners;
+    if (winners.isEmpty) return;
+    final settings = _controller.settings;
+    final count = winners.length;
+    final text = winnersAsText(
+      title: settings.title,
+      winners: winners,
+      format: settings.format,
+      isInRange: _controller.isInRange,
+    );
+    await Clipboard.setData(ClipboardData(text: text));
+    if (!mounted) return;
+    _showSnackBar(
+      count == 1
+          ? 'Copied 1 winner to the clipboard.'
+          : 'Copied $count winners to the clipboard.',
+    );
+  }
+
   void _showSnackBar(String message, {VoidCallback? onUndo}) {
     final screenWidth = MediaQuery.sizeOf(context).width;
     ScaffoldMessenger.of(context)
@@ -271,6 +292,7 @@ class _DrawPageState extends State<DrawPage>
       onRemove: _removeWinner,
       onUndoLast: _undoLastWinner,
       onClearAll: _confirmClearAll,
+      onCopy: _copyWinners,
     );
     final landscape =
         constraints.maxWidth >= 600 &&
