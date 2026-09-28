@@ -1,5 +1,5 @@
 name: wedding_draw
-description: "A new Flutter Wedding project."
+description: "Wedding lucky-number draw with slot-machine reels, a winners list, sound effects and confetti."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -29,7 +29,6 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
-  animated_digit: ^3.2.3
   audioplayers: ^6.7.0
   confetti: ^0.8.0
   shared_preferences: ^2.5.3
@@ -56,6 +55,19 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  # Sound effects, synthesized by tool/generate_sounds.py.
+  # Sound effects (synthesized by tool/generate_sounds.py) and the Roboto
+  # license, which is listed on the app's license page.
   assets:
     - assets/sounds/
+    - assets/fonts/Roboto-LICENSE.txt
+
+  # Bundled so text also renders on the web without an internet connection
+  # (Flutter web otherwise downloads Roboto from Google Fonts).
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Roboto-Bold.ttf
+          weight: 700
