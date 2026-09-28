@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.wedding.draw.app" "\0"
-            VALUE "FileDescription", "wedding_draw" "\0"
+            VALUE "FileDescription", "Wedding Draw" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "wedding_draw" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.wedding.draw.app. All rights reserved." "\0"
             VALUE "OriginalFilename", "wedding_draw.exe" "\0"
-            VALUE "ProductName", "wedding_draw" "\0"
+            VALUE "ProductName", "Wedding Draw" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
